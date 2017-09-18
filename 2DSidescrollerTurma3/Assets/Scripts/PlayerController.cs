@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour {
 	public bool grounded;
 	public bool doubleJumpAvailable = false;
 
+	[HideInInspector]
+	public bool stopPlayer = false;
+
 	Rigidbody2D rb;
 	Animator anim;
 
@@ -25,6 +28,11 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 
 		currentSpeed = moveSpeed;
+	}
+
+	void OnEnabled(){
+		gameObject.layer = LayerMask.NameToLayer("Player");
+		stopPlayer = false;
 	}
 
 	void Update () {
@@ -36,8 +44,10 @@ public class PlayerController : MonoBehaviour {
 
 		float move = Input.GetAxis("Horizontal");
 
-		rb.velocity = new Vector2(move*currentSpeed,rb.velocity.y);
-		
+		if (stopPlayer == false) {
+			rb.velocity = new Vector2 (move * currentSpeed, rb.velocity.y);
+		}
+
 		anim.SetFloat ("speed", Mathf.Abs(move));
 		//Check for Flip
 		if (move > 0 && !facingRight) {

@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void RespawnPlayer(){
 		StartCoroutine (Respawn());
+		player.layer = LayerMask.NameToLayer("Player");
 	}
 
 	IEnumerator Respawn(){
@@ -47,5 +48,9 @@ public class LevelManager : MonoBehaviour {
 		player.SetActive (true);
 		fadePanel.color = Color.black;
 		fadePanel.CrossFadeAlpha (0, 2, true);
+	}
+
+	public void UpdateHealthBar(float amount){
+		
 	}
 }
