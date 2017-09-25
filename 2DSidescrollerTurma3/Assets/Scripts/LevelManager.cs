@@ -13,6 +13,11 @@ public class LevelManager : MonoBehaviour {
 
 	public Image fadePanel;
 
+	public Image healthBar;
+	public Text healthText;
+
+	public GameObject gameOverPanel;
+
 	public static LevelManager instance;
 
 	void Awake(){
@@ -50,7 +55,12 @@ public class LevelManager : MonoBehaviour {
 		fadePanel.CrossFadeAlpha (0, 2, true);
 	}
 
-	public void UpdateHealthBar(float amount){
-		
+	public void UpdateHealthBar(float amount, float maxHealth){
+		healthBar.fillAmount = amount;
+		healthText.text = (amount*maxHealth).ToString ();
+	}
+
+	public void GameOver(){
+		gameOverPanel.SetActive (true);
 	}
 }

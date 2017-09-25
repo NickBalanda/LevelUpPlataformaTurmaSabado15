@@ -21,4 +21,19 @@ public class DamageOnTouch : MonoBehaviour {
 			player.LoseHealth (damage,knockback);
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D other){
+		if(other.gameObject.CompareTag("Player")){
+
+			PlayerHealth player = other.gameObject.GetComponent<PlayerHealth> ();
+
+			if (transform.position.x > player.gameObject.transform.position.x) {
+				player.knockBackRight = true;
+			} else {
+				player.knockBackRight = false;
+			}
+
+			player.LoseHealth (damage,knockback);
+		}
+	}
 }

@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	public float maxHealth = 100;
 
-	[HideInInspector]
+
 	public float currentHealth;
 
 	public float knockBackDuration = 1;
@@ -18,19 +18,32 @@ public class PlayerHealth : MonoBehaviour {
 	Rigidbody2D rb;
 	SpriteRenderer sp;
 	PlayerController pc;
-
+	Animator anim;
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		sp = GetComponent<SpriteRenderer> ();
 		pc = GetComponent<PlayerController> ();
+		anim = GetComponent<Animator> ();
 
 		currentHealth = maxHealth;
+		LevelManager.instance.UpdateHealthBar (currentHealth/maxHealth,maxHealth);
+
 	}
-	
+	public void GainHealth(float amount){
+		currentHealth += amount;
+		if (currentHealth > maxHealth) {
+			currentHealth = maxHealth;
+		}
+		LevelManager.instance.UpdateHealthBar (currentHealth/maxHealth,maxHealth);
+	}
+
 	public void LoseHealth(float damage, bool knockback){
 		currentHealth -= damage;
+		if (currentHealth <= 0) {
+			LevelManager.instance.GameOver ();
+		}
+		LevelManager.instance.UpdateHealthBar (currentHealth/maxHealth,maxHealth);
 		StartCoroutine (Invulnerable ());
-
 		if (knockback) {
 			StartCoroutine (Knockback ());
 		}
@@ -38,7 +51,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	public IEnumerator Knockback(){
 		pc.stopPlayer = true;
-
+		anim.SetBool ("damage", true);
 		if (knockBackRight) {
 			rb.velocity = new Vector2 (-knockBackPower.x, knockBackPower.y);
 		} else {
@@ -47,6 +60,7 @@ public class PlayerHealth : MonoBehaviour {
 	
 		yield return new WaitForSeconds(knockBackDuration);
 		pc.stopPlayer = false;
+		anim.SetBool ("damage", false);
 	}
 
 	public IEnumerator Invulnerable(){
