@@ -24,9 +24,11 @@ public class NPC_AI : MonoBehaviour {
 	Vector3 initScale;
 
 	Rigidbody2D rb;
-	// Use this for initialization
+	Animator anim;
+
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
 
 		waitCounter = waitTime;
 		walkCounter = walkTime;
@@ -36,7 +38,7 @@ public class NPC_AI : MonoBehaviour {
 		ChooseDirection ();
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, whatIsWall);
 
@@ -45,6 +47,7 @@ public class NPC_AI : MonoBehaviour {
 		}
 
 		if (isWalking) {
+			anim.Play ("Walk");
 			walkCounter -= Time.deltaTime;
 			if (walkCounter < 0) {
 				isWalking = false;
@@ -60,7 +63,7 @@ public class NPC_AI : MonoBehaviour {
 		} 
 
 		else {
-
+			anim.Play ("Idle");
 			rb.velocity = Vector2.zero;
 
 			waitCounter -= Time.deltaTime;

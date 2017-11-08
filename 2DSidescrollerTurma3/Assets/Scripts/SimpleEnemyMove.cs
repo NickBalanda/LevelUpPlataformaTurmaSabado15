@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class SimpleEnemyMove : MonoBehaviour {
 
-	public float starSpeed = 5;
-	[HideInInspector]
-	public float moveSpeed;
+	public float speed = 5;
 
 	public bool facingRight;
 
@@ -24,24 +22,27 @@ public class SimpleEnemyMove : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		initScale = transform.localScale;
-		moveSpeed = starSpeed;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, whatIsWall);
-		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, whatIsWall);
+		hittingWall = Physics2D.OverlapCircle (wallCheck.position, 
+			wallCheckRadius, whatIsWall);
+		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, 
+			wallCheckRadius, whatIsWall);
 
 		if (hittingWall || !notAtEdge) {
 			facingRight = !facingRight;
 		}
 
 		if (facingRight) {
-			transform.localScale = new Vector3 (-initScale.x, initScale.y, initScale.z);
-			rb.velocity = new Vector2 (moveSpeed, rb.velocity.y);
+			transform.localScale = new Vector3 (-initScale.x, initScale.y, 
+				initScale.z);
+			rb.velocity = new Vector2 (speed, rb.velocity.y);
 		} else {
-			transform.localScale = new Vector3 (initScale.x, initScale.y, initScale.z);
-			rb.velocity = new Vector2 (-moveSpeed, rb.velocity.y);
+			transform.localScale = new Vector3 (initScale.x, initScale.y, 
+				initScale.z);
+			rb.velocity = new Vector2 (-speed, rb.velocity.y);
 		}
 	}
 }

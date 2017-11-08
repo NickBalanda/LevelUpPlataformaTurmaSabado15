@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void Start () {
+		PlayerPrefs.DeleteAll ();
+		totalGems = PlayerPrefs.GetInt ("coins");
 		gemsText.text = ":" + totalGems.ToString ("00");
 		fadePanel.gameObject.SetActive (true);
 		fadePanel.CrossFadeAlpha (0, 2, true);
@@ -37,6 +39,7 @@ public class LevelManager : MonoBehaviour {
 	public void AddGem(){
 		totalGems += 1;
 		gemsText.text = ":" + totalGems.ToString ("00");
+		PlayerPrefs.SetInt ("coins", totalGems);
 	}
 
 	public void RespawnPlayer(){

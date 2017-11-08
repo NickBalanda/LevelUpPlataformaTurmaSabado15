@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour {
 	SpriteRenderer sp;
 	PlayerController pc;
 	Animator anim;
+
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
 		sp = GetComponent<SpriteRenderer> ();
@@ -51,31 +52,29 @@ public class PlayerHealth : MonoBehaviour {
 
 	public IEnumerator Knockback(){
 		pc.stopPlayer = true;
-		anim.SetBool ("damage", true);
+		anim.SetBool("damage",true);
 		if (knockBackRight) {
 			rb.velocity = new Vector2 (-knockBackPower.x, knockBackPower.y);
 		} else {
 			rb.velocity = new Vector2 (knockBackPower.x, knockBackPower.y);
 		}
 	
+		sp.color = Color.red;
 		yield return new WaitForSeconds(knockBackDuration);
+		sp.color = Color.white;
 		pc.stopPlayer = false;
-		anim.SetBool ("damage", false);
+		anim.SetBool("damage",false);
+
 	}
 
 	public IEnumerator Invulnerable(){
 
 		gameObject.layer = LayerMask.NameToLayer("Invulnerable");
 
-		sp.color = Color.red;
-		yield return new WaitForSeconds(0.3f);
-		sp.color = Color.white;
-
 		for(int i = 0; i<6;i++){
 			yield return new WaitForSeconds (0.2f);
 			sp.enabled = !sp.enabled;
 		}
-
 		gameObject.layer = LayerMask.NameToLayer("Player");
 	}
 }
