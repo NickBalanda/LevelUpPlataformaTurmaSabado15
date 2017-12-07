@@ -23,6 +23,7 @@ public class Projectile : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			other.GetComponent<EnemyHealth>().LoseHealth (damage);
 		}
+		SoundManager.PlaySFX ("DestroyRocks");
 		Destroy (gameObject);
 	}
 
@@ -31,6 +32,7 @@ public class Projectile : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			other.gameObject.GetComponent<EnemyHealth>().LoseHealth (damage);
 		}
+		SoundManager.PlaySFX ("DestroyRocks");
 		Destroy (gameObject);
 	}
 }

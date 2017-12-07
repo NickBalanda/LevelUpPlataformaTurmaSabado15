@@ -46,22 +46,22 @@ public class PlayerController : MonoBehaviour {
 
 		if (stopPlayer == false) {
 			rb.velocity = new Vector2 (move * currentSpeed, rb.velocity.y);
-		}
 
-		anim.SetFloat ("speed", Mathf.Abs(move));
-		//Check for Flip
-		if (move > 0 && !facingRight) {
-			Flip ();
-		} else if (move < 0 && facingRight) {
-			Flip();
-		}
+			anim.SetFloat ("speed", Mathf.Abs(move));
+			//Check for Flip
+			if (move > 0 && !facingRight) {
+				Flip ();
+			} else if (move < 0 && facingRight) {
+				Flip();
+			}
 
-		//Jump
-		if (Input.GetButtonDown ("Jump") && grounded) {
-			Jump ();
-		} else if (Input.GetButtonDown ("Jump") && doubleJumpAvailable) {
-			Jump ();
-			doubleJumpAvailable = false;
+			//Jump
+			if (Input.GetButtonDown ("Jump") && grounded) {
+				Jump ();
+			} else if (Input.GetButtonDown ("Jump") && doubleJumpAvailable) {
+				Jump ();
+				doubleJumpAvailable = false;
+			}
 		}
 	}
 
@@ -78,4 +78,10 @@ public class PlayerController : MonoBehaviour {
 		transform.eulerAngles = theFlip;
 	}
 
+	public void StopPlayer(){
+		stopPlayer = true;
+	}
+	public void StarPlayer(){
+		stopPlayer = false;
+	}
 }

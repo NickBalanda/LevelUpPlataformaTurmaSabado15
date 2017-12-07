@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour {
+	
+	[SerializeField]
+	public UnityEvent onDeath = new UnityEvent();
+	//onDeath.Invoke();
 
 	public float maxHealth = 100;
 	public float currentHealth;
@@ -19,6 +24,7 @@ public class EnemyHealth : MonoBehaviour {
 		currentHealth -= damage;
 		UpdateHealthBar (currentHealth/maxHealth);
 		if (currentHealth <= 0) {
+			onDeath.Invoke ();
 			Destroy (gameObject);
 		}
 	}

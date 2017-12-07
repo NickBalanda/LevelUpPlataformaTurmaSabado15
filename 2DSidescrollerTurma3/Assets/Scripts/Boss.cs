@@ -6,6 +6,7 @@ public class Boss : MonoBehaviour {
 
 	public enum EnemyState {STATE1 = 0, STATE2 = 1, STATE3 = 2}
 
+	[Tooltip("current Enemy state")]
 	public EnemyState states;
 
 	public float speed = 7;
@@ -38,6 +39,10 @@ public class Boss : MonoBehaviour {
 		initSpeed = speed;
 	}
 	void Start () {
+		//StartEnemy ();
+	}
+
+	public void StartEnemy(){
 		StartCoroutine(EnemySM());
 	}
 

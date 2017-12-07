@@ -14,10 +14,13 @@ public class PlayerShoot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonDown("Shoot")){
-			GameObject obj = (GameObject)Instantiate (projectile,shootPosition.position,Quaternion.identity);
-			if (!pc.facingRight) {
-				obj.GetComponent<Projectile> ().speed *= -1;
+		if (pc.stopPlayer == false) {
+			if(Input.GetButtonDown("Shoot")){
+				SoundManager.PlaySFX ("Special Guns (5)");
+				GameObject obj = (GameObject)Instantiate (projectile,shootPosition.position,Quaternion.identity);
+				if (!pc.facingRight) {
+					obj.GetComponent<Projectile> ().speed *= -1;
+				}
 			}
 		}
 	}

@@ -32,6 +32,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 	public void GainHealth(float amount){
 		currentHealth += amount;
+		SoundManager.PlaySFX ("Special & Powerup (4)");
 		if (currentHealth > maxHealth) {
 			currentHealth = maxHealth;
 		}
